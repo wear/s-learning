@@ -1,0 +1,17 @@
+This s-learning is trying to setup a more collaborate learning environment to make self-learning more easy.                                                
+
+For use case:
+
+You can join or create a group for learning something, we provide wiki for knowledge collect/transfer, member's learning activity, ask and answer, many other SNS element.
+
+Something you should know:
+
+1: It is still under heavy development and UI re-design.              
+
+2: I don't write test.
+
+It is based on the community engine
+http://github.com/bborn/communityengine/tree/master
+
+Wiki is borrowed from redmine
+http://github.com/edavis10/redmine/tree/master
