@@ -1,0 +1,38 @@
+<dl class="<%=activity.item_type && activity.item_type.humanize.downcase%>">
+	<dt><%=time_ago_in_words_or_date(activity.created_at)%></dt>
+	<dd><%=link_to activity.user.login.capitalize, user_path(activity.user.login_slug)%>
+		<% if activity.item %>  
+			<%case activity.item_type 
+				when 'Post' %> 
+				<%= :wrote_a_post.l %>
+				<%= link_to activity.item.title, user_post_path(activity.item.user, activity.item)%>
+			    <% when 'Photo' %>
+				<%=:uploaded_a_photo.l%>
+				<%= link_to image_tag(activity.item.public_filename(:thumb), :width => '50px'), user_photo_path(activity.item.user, activity.item)%>
+				<% when 'Comment' %>
+				<%=:left_a_comment.l%> 
+				<%= link_to truncate_words(activity.item.comment), commentable_url(activity.item)%>
+				<%  when 'Favorite' -%>
+				<%=:favorited.l%>
+				<%= link_to " a #{activity.item.favoritable.class.to_s.humanize.downcase}", user_favorite_path(activity.item.user, activity.item)%>
+				<% when 'Invitation' %>
+				<%=:invited_friends.l %>
+				<% when 'WikiContent::Version' %>
+				<%= link_to "更新了资料库到版本#{activity.item.version}", page_group_wiki_path(@group, :version => activity.item.version) %>
+			<% else %>
+				<%#=render :partial => 'shared/unhandled_item', :locals => {:activity => activity}%>
+			 <% end %>
+		 <% else %>
+			<% case activity.action  when 'updated_profile' %>
+			<%=:updated_their_profile.l%>
+			<% when 'logged_in' %>
+			<%=:logged_into_the_site.l %>
+			<% when 'wiki_content/version' %>
+			sdfsfd
+			<%#= link_to activity.item, page_group_wiki_path(@group, :page => @page.title, :version => activity.item.version) %>
+			<% else %>
+			<%= " #{activity.action.sub("_", " ") }"%>
+			<% end %>
+	   <% end %>
+	 </dd>
+</dl>

@@ -1,0 +1,19 @@
+.box
+  %h3= :new_group.l
+  = error_messages_for :group
+  - form_for(:group, :url => groups_path, :html => {:class => "MainForm"} ) do |f|
+    %label= :name.l
+    = f.text_field :title    
+
+    %label= :domain.l
+    = f.text_field :domain
+    
+    %label= :description.l
+    = f.text_area :description
+
+    = f.hidden_field(:creator,:value => current_user.id)
+	
+    %p
+      = submit_tag :create.l
+
+  = link_to :back.l, groups_path

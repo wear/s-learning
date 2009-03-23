@@ -1,0 +1,10 @@
+#yui-main
+  = link_to :create_group.l, new_group_path 
+
+%h4
+  = :group_list.l
+
+%p  
+  - Group.find(:all).each do |group|
+    %p 
+    = link_to group.title, group 

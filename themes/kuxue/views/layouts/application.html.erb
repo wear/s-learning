@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title><%= page_title %></title>
+	<%= javascript_include_tag '/javascripts/jquery.js' %>
+	<%= javascript_include_tag :defaults %> 
+	<%=javascript_include_tag "prototip-min", :plugin => "community_engine"%>
+	<%=stylesheet_link_tag 'prototip', :media => 'screen', :plugin => "community_engine"%>
+	<%= javascript_include_tiny_mce_if_used %>
+	<%= tiny_mce if using_tiny_mce? %>
+	<link rel="stylesheet" href="/stylesheets/blueprint/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="/stylesheets/blueprint/print.css" type="text/css" media="print">
+	<link rel="stylesheet" href="/stylesheets/main.css" type="text/css" media="screen, projection">    
+	<!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]--> 
+	<%= heads_for_wiki_formatter %>
+	<%= yield :header_tags -%> 
+</head> 
+<body>
+	<div class='container'>
+		<div class='span-24'>
+			<div class='span-18'>
+			   <h1><%=link_to AppConfig.community_name,'/',:class=>'logo'%></h1>    
+			</div>
+			<div class='span-6 last'>
+			   	<% if logged_in? -%>
+			    	<%= render :partial => 'shared/user_menu'%>
+			    <% else -%>
+			      <h2><%=:welcome_message.l(:login_link => (link_to :log_in.l, login_path), :signup_link => (link_to :sign_up.l, signup_path))%></h2>
+				<% end -%> 
+			</div>      
+            <div class='span-24'>
+              	<% %w(info notice error).each do |type| -%>
+				   <% if flash[type.to_sym] -%>
+				     <div class="flash_message <%=type.to_s%>">
+				     	<span><%= h(flash[type.to_sym]) %></span>
+						<small><a href='#'  onclick="jQuery('div.flash_message').hide();return false"><%=:close_this_message.l%></a></small>
+				     </div>
+					<% end -%>
+				<% end -%>
+				<%= yield %>
+				<div id="CommunityFooter">
+			    	<ul>
+						<li><a href="/" title="<%=AppConfig.community_name + :home.l%>"><%= :home.l%></a></li>
+							<%if !logged_in? -%>
+							<li><%=link_to :log_in.l , login_path %></li>
+							<% else -%>
+							<li><a href="/logout" title="<%=:log_out_of_your.l + AppConfig.community_name  + :account.l%>" ><%=:log_out.l%></a></li> 
+							<% end -%>
+							<li><a href="/about" title="<%=:what_is.l + AppConfig.community_name%>?"><%=:about.l%> </li>
+						   <li><a href="/faq" title="<%=:frequent_asked_questions.l%>"><%=:faq.l%></a></li>
+					</ul>	
+			    </div>
+            </div>
+		</div>
+	</div>
+	<div id="ajax-indicator" style="display:none;"><span><%= :label_loading.l %></span></div> 
+</body>
+</html>

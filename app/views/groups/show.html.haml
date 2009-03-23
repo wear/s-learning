@@ -1,0 +1,19 @@
+= :group_name.l
+
+%h3
+  %strong= @group.title
+  %br
+  = @group.description  
+  %p
+  = link_to :join_group.l,join_group_path(@group)
+
+%p
+=:group_creater.l
+= link_to @group.creater.login,user_path(@group.creater)
+%p
+  %ul
+    %li= link_to :group_member.l,members_group_path(@group)
+    %li= :group_wiki.l
+    %li= :group_activity.l
+%p
+= link_to :back.l, groups_path 

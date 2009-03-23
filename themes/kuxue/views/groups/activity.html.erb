@@ -1,0 +1,5 @@
+<%= render :partial => '/shared/group_header' %>
+
+<% @recent_activity.each do |activity| -%>
+   <%=render :partial => "shared/activity", :locals => {:activity => activity }%>
+<% end %>

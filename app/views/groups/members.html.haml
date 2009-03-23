@@ -1,0 +1,19 @@
+= :group_name.l
+
+%h1=@group.title
+%br
+= @group.description 
+
+%p
+= :pending_group_members.l
+%br
+- @group.pending_members.each do |pending_member|
+  = link_to pending_member.login,user_path(pending_member)  
+  = link_to :accept_pending_group_member.l,accpet_pending_group_member_path(@group,pending_member)
+  %br  
+%p
+= :group_member
+%P  
+- @group.members.each do |member|
+  = link_to member.login,user_path(member)  
+  %br

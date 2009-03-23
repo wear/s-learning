@@ -1,0 +1,27 @@
+<div class='span-24'>
+	<%= group_icon_for(@group) %>
+	<h3><%=link_to @group.title,@group %></h3>
+	<%= @group.tag_list %>
+	<p> 
+	<% if logged_in? && current_user.becomes(LearnUser).is_mod_of?(@group) %>
+		<%=link_to '编辑',edit_group_path(@group) %>
+	<% end %>
+	<% if logged_in? && current_user.id == @group.created_by  -%>
+		<%=link_to '删除',group_path(@group),:method => 'delete'%>
+	<% end -%>
+	</p>
+	<%= @group.description %>  
+	<% if logged_in? && !current_user.becomes(LearnUser).is_member_of?(@group)
+	%>
+	   - <%=link_to '加入小组',join_group_path(@group)%>
+	<% end -%>
+	<div id="NavBar">
+	 	<ul>
+			<li><%=link_to '动态',activity_group_path(@group)%></li> 
+			<li><%=link_to '资料库',page_group_wiki_path(@group)%></li>
+			<% Category.find(:all).each do |c| -%>
+				<%= topnav_tab c.name, {:url => group_category_path(@group,c), :section => c.name}%>
+			<% end -%>
+		</ul>   
+	</div>
+</div>   
